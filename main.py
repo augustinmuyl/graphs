@@ -14,17 +14,16 @@ def compute_graph_properties(G):
     return num_nodes, num_edges, density
 
 
-def compute_eigenvalues(G, k=5):
-    L = nx.normalized_laplacian_matrix(G)
-    eigenvalues = spla.eigsh(L, k=k, which="SM", return_eigenvectors=False)
+def compute_eigenvalues(G):
+    eigenvalues = nx.normalized_laplacian_spectrum(G)
     return eigenvalues
 
 
 if __name__ == "__main__":
     graph = create_graph()
     nodes, edges, density = compute_graph_properties(graph)
-    eigenvalues = compute_eigenvalues(graph, k=1)
+    eigenvalues = compute_eigenvalues(graph)
     print(f"Number of nodes: {nodes}")
     print(f"Number of edges: {edges}")
     print(f"Density of the graph: {density}")
-    print(f"Top {len(eigenvalues)} eigenvalues: {eigenvalues}")
+    print(eigenvalues[1], eigenvalues[-1] - eigenvalues[1])
