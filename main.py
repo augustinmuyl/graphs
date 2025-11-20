@@ -1,16 +1,30 @@
 import networkx as nx
-import matplotlib.pyplot as plt
+import scipy.sparse.linalg as spla
 
-G = nx.Graph()
-G.add_node(1)
-G.add_nodes_from([2, 3])
-G.add_edge(1, 2)
-e = (2, 3)
-G.add_edge(*e)
-G.add_edges_from([(1, 2), (1, 3)])
-list(G.nodes)
 
-print("Nodes in the graph:", list(G))
+def create_graph():
+    G = nx.complete_graph(100)
+    return G
 
-nx.draw(G, with_labels=True)
-plt.show()
+
+def compute_graph_properties(G):
+    num_nodes = G.number_of_nodes()
+    num_edges = G.number_of_edges()
+    density = nx.density(G)
+    return num_nodes, num_edges, density
+
+
+def compute_eigenvalues(G, k=5):
+    L = nx.normalized_laplacian_matrix(G)
+    eigenvalues = spla.eigsh(L, k=k, which="SM", return_eigenvectors=False)
+    return eigenvalues
+
+
+if __name__ == "__main__":
+    graph = create_graph()
+    nodes, edges, density = compute_graph_properties(graph)
+    eigenvalues = compute_eigenvalues(graph, k=1)
+    print(f"Number of nodes: {nodes}")
+    print(f"Number of edges: {edges}")
+    print(f"Density of the graph: {density}")
+    print(f"Top {len(eigenvalues)} eigenvalues: {eigenvalues}")
