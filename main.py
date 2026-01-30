@@ -1,10 +1,6 @@
 import networkx as nx
 import scipy.sparse.linalg as spla
-
-
-def create_graph():
-    G = nx.complete_graph(100)
-    return G
+from graph_operations.generators import create_graph
 
 
 def compute_graph_properties(G):
