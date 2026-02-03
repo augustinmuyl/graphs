@@ -1,6 +1,6 @@
 import networkx as nx
 import scipy.sparse.linalg as spla
-from graph_operations.generators import create_graph
+from graph_operations.generators import create_complete_graph
 
 
 def compute_graph_properties(G):
@@ -16,7 +16,7 @@ def compute_eigenvalues(G):
 
 
 if __name__ == "__main__":
-    graph = create_graph()
+    graph = create_complete_graph()
     nodes, edges, density = compute_graph_properties(graph)
     eigenvalues = compute_eigenvalues(graph)
     print(f"Number of nodes: {nodes}")

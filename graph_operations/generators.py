@@ -1,21 +1,17 @@
 import networkx as nx
 
 
-def create_graph():
-    G = nx.complete_graph(100)
-    return G
+def create_complete_graph(n=100):
+    return nx.complete_graph(n)
 
 
 def create_erdos_renyi_graph(n=100, p=0.05):
-    G = nx.erdos_renyi_graph(n, p)
-    return G
+    return nx.erdos_renyi_graph(n, p)
 
 
 def create_small_world_graph(n=100, k=4, p=0.1):
-    G = nx.watts_strogatz_graph(n, k, p)
-    return G
+    return nx.watts_strogatz_graph(n, k, p)
 
 
-def create_scale_free_graph(n=100):
-    G = nx.barabasi_albert_graph(n, 3)
-    return G
+def create_scale_free_graph(n=100, m=3):
+    return nx.barabasi_albert_graph(n, m)
