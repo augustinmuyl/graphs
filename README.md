@@ -114,28 +114,31 @@ These correlations quantify how well each spectral indicator tracks robustness o
 
 **Plots Included**
 GCC robustness over removals:
-- `results/plots/er_gcc_fraction.png`
-- `results/plots/er_num_components.png`
-- `results/plots/er_avg_shortest_path_gcc.png`
+
+- `results/plots/er_random/er_gcc_fraction.png`
+- `results/plots/er_random/er_num_components.png`
+- `results/plots/er_random/er_avg_shortest_path_gcc.png`
 
 Spectral metrics over removals:
-- `results/plots/er_algebraic_connectivity_gcc.png`
-- `results/plots/er_kirchhoff_index_gcc.png`
+
+- `results/plots/er_random/er_algebraic_connectivity_gcc.png`
+- `results/plots/er_random/er_kirchhoff_index_gcc.png`
 
 Spectral-vs-robustness relationships:
-- `results/plots/er_scatter_kirchhoff_vs_gcc_fraction.png`
-- `results/plots/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png`
-- `results/plots/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png`
+
+- `results/plots/er_random/er_scatter_kirchhoff_vs_gcc_fraction.png`
+- `results/plots/er_random/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png`
+- `results/plots/er_random/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png`
 
 **Figure Gallery**
-![](results/plots/er_gcc_fraction.png)
-![](results/plots/er_kirchhoff_index_gcc.png)
-![](results/plots/er_num_components.png)
-![](results/plots/er_avg_shortest_path_gcc.png)
-![](results/plots/er_algebraic_connectivity_gcc.png)
-![](results/plots/er_scatter_kirchhoff_vs_gcc_fraction.png)
-![](results/plots/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png)
-![](results/plots/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png)
+![](results/plots/er_random/er_gcc_fraction.png)
+![](results/plots/er_random/er_kirchhoff_index_gcc.png)
+![](results/plots/er_random/er_num_components.png)
+![](results/plots/er_random/er_avg_shortest_path_gcc.png)
+![](results/plots/er_random/er_algebraic_connectivity_gcc.png)
+![](results/plots/er_random/er_scatter_kirchhoff_vs_gcc_fraction.png)
+![](results/plots/er_random/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png)
+![](results/plots/er_random/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png)
 
 ## Experiment Two: Erdos-Renyi Graphs and Degree Attacks
 
