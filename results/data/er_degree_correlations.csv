@@ -1,0 +1,13 @@
+spectral_metric,robustness_metric,pearson_r,n_pairs
+algebraic_connectivity_gcc,gcc_fraction,-0.4419110585840769,177
+algebraic_connectivity_gcc,gcc_size,-0.4419110585840769,177
+algebraic_connectivity_gcc,num_components,0.37759995857970696,177
+algebraic_connectivity_gcc,avg_shortest_path_gcc,-0.8450083985203357,177
+spectral_gap_ratio_gcc,gcc_fraction,0.034978254599668836,177
+spectral_gap_ratio_gcc,gcc_size,0.034978254599668746,177
+spectral_gap_ratio_gcc,num_components,-0.12460004326456998,177
+spectral_gap_ratio_gcc,avg_shortest_path_gcc,0.8788708584811454,177
+kirchhoff_index_gcc,gcc_fraction,0.7579525936880914,177
+kirchhoff_index_gcc,gcc_size,0.7579525936880913,177
+kirchhoff_index_gcc,num_components,-0.8087883164542913,177
+kirchhoff_index_gcc,avg_shortest_path_gcc,0.798628636808767,177
