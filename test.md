@@ -17,3 +17,4 @@ Notes
 
 - For directed graphs, --kind controls component logic; defaults to weak.
 - random attack uses --seed. Others are deterministic.
+- spectral properties are computed for the gcc.

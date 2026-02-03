@@ -18,11 +18,16 @@ def _load_series(path, x_col, y_col):
         reader = csv.DictReader(f)
         for row in reader:
             if x_col not in row or y_col not in row:
-                raise ValueError(
-                    f"Missing columns in {path}: required '{x_col}' and '{y_col}'."
-                )
-            xs.append(float(row[x_col]))
-            ys.append(float(row[y_col]))
+                raise ValueError(f"Missing columns in {path}: required '{x_col}' and '{y_col}'.")
+            x_raw = row[x_col]
+            y_raw = row[y_col]
+            if x_raw == "" or y_raw == "":
+                continue
+            try:
+                xs.append(float(x_raw))
+                ys.append(float(y_raw))
+            except ValueError:
+                continue
 
     if not xs:
         raise ValueError(f"No data rows found in {path}.")

@@ -24,8 +24,14 @@ from graph_operations.generators import (
 )
 from metrics.robustness import (
     average_shortest_path_length_giant_component,
+    giant_component_subgraph,
     largest_component_size,
     number_of_components,
+)
+from metrics.spectral import (
+    algebraic_connectivity,
+    kirchhoff_index,
+    spectral_gap_ratio,
 )
 
 
@@ -84,6 +90,20 @@ def run_experiment(G, attack_order, num_steps=None, kind="weak", weight=None):
         gcc_fraction = (gcc_size / n) if n > 0 else 0.0
         components = number_of_components(H, kind=kind)
         avg_sp = average_shortest_path_length_giant_component(H, kind=kind, weight=weight)
+        gcc = giant_component_subgraph(H, kind=kind)
+        if gcc.is_directed() and kind in ("weak", "undirected"):
+            gcc = gcc.to_undirected()
+
+        algebraic_conn = None
+        spectral_ratio = None
+        kirchhoff = None
+        if gcc.number_of_nodes() >= 2:
+            algebraic_conn = algebraic_connectivity(gcc)
+            spectral_ratio = spectral_gap_ratio(gcc)
+            try:
+                kirchhoff = kirchhoff_index(gcc)
+            except ValueError:
+                kirchhoff = None
 
         rows.append(
             {
@@ -93,6 +113,9 @@ def run_experiment(G, attack_order, num_steps=None, kind="weak", weight=None):
                 "gcc_size": gcc_size,
                 "num_components": components,
                 "avg_shortest_path_gcc": avg_sp,
+                "algebraic_connectivity_gcc": algebraic_conn,
+                "spectral_gap_ratio_gcc": spectral_ratio,
+                "kirchhoff_index_gcc": kirchhoff,
             }
         )
 
@@ -108,7 +131,7 @@ def main():
     parser.add_argument("--k", type=int, default=4)
     parser.add_argument("--m", type=int, default=3)
     parser.add_argument("--seed", type=int, default=None)
-    parser.add_argument("--num-steps", type=int, default=20)
+    parser.add_argument("--num-steps", type=int, default=None)
     parser.add_argument("--kind", choices=["weak", "strong", "undirected"], default="weak")
     parser.add_argument("--weight", default=None)
     parser.add_argument("--out", default="results.csv")
@@ -143,6 +166,9 @@ def main():
                 "gcc_size",
                 "num_components",
                 "avg_shortest_path_gcc",
+                "algebraic_connectivity_gcc",
+                "spectral_gap_ratio_gcc",
+                "kirchhoff_index_gcc",
             ],
         )
         writer.writeheader()
