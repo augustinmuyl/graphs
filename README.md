@@ -68,11 +68,11 @@ Notes:
 - Default columns are `removed_fraction` (x) and `gcc_fraction` (y).
 
 ## Experiment One: Erdos-Renyi Graphs and Random Failures/Attacks
-This report summarizes the ER experiment results in `results/data/er.csv` and the plots in `results/plots`. The dataset contains 201 removal checkpoints for a single Erdos-Renyi graph with inferred size `n=200` (from `removed_nodes + gcc_size`). Spectral metrics are computed on the GCC and are missing for 9 checkpoints where the GCC becomes too small.
+This report summarizes the ER experiment results in `results/data/er.csv` and the plots in `results/plots`. The dataset contains 201 removal checkpoints for a single Erdos-Renyi graph with 200 nodes. Spectral metrics are computed on the GCC and are missing for 9 checkpoints where the GCC becomes too small.
 
 **Experiment Setup (from `results/data/er.csv`)**
-- Graph family: Erdos-Renyi (single instance, `n=200`, parameters not recorded in the CSV).
-- Failure/attack model: node removals in increasing fractions `removed_fraction` from 0.0 to 1.0 (201 checkpoints).
+- Graph family: Erdos-Renyi (single instance, `n=200`, `p=0.03`, `seed=42`).
+- Failure/attack model: random node removals in increasing fractions `removed_fraction` from 0.0 to 1.0 (201 checkpoints).
 - Robustness metrics: `gcc_fraction`, `gcc_size`, `num_components`, `avg_shortest_path_gcc`.
 - Spectral metrics on GCC: `algebraic_connectivity_gcc`, `spectral_gap_ratio_gcc`, `kirchhoff_index_gcc`.
 
@@ -120,21 +120,18 @@ GCC robustness over removals:
 Spectral metrics over removals:
 - `results/plots/er_algebraic_connectivity_gcc.png`
 - `results/plots/er_kirchhoff_index_gcc.png`
-- `results/plots/er.png`
 
-Spectral-vs-robustness relationships (new):
+Spectral-vs-robustness relationships:
 - `results/plots/er_scatter_kirchhoff_vs_gcc_fraction.png`
 - `results/plots/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png`
 - `results/plots/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png`
 
 **Figure Gallery**
 ![](results/plots/er_gcc_fraction.png)
+![](results/plots/er_kirchhoff_index_gcc.png)
 ![](results/plots/er_num_components.png)
 ![](results/plots/er_avg_shortest_path_gcc.png)
 ![](results/plots/er_algebraic_connectivity_gcc.png)
-![](results/plots/er_kirchhoff_index_gcc.png)
-![](results/plots/er.png)
-![](results/plots/er_compare_gcc_fraction_vs_kirchhoff.png)
 ![](results/plots/er_scatter_kirchhoff_vs_gcc_fraction.png)
 ![](results/plots/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png)
 ![](results/plots/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png)
