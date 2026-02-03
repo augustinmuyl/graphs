@@ -68,6 +68,7 @@ Notes:
 - Default columns are `removed_fraction` (x) and `gcc_fraction` (y).
 
 ## Experiment One: Erdos-Renyi Graphs and Random Failures/Attacks
+
 This report summarizes the ER experiment results in `results/data/er.csv` and the plots in `results/plots`. The dataset contains 201 removal checkpoints for a single Erdos-Renyi graph with 200 nodes. Spectral metrics are computed on the GCC and are missing for 9 checkpoints where the GCC becomes too small.
 
 **Experiment Setup (from `results/data/er.csv`)**
@@ -135,3 +136,107 @@ Spectral-vs-robustness relationships:
 ![](results/plots/er_scatter_kirchhoff_vs_gcc_fraction.png)
 ![](results/plots/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png)
 ![](results/plots/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png)
+
+## Experiment Two: Erdos-Renyi Graphs and Degree Attacks
+
+This report summarizes the ER degree-attack results in `results/data/er_degree.csv` and the plots in `results/plots/er_degree`. The dataset contains 201 removal checkpoints for a single Erdos-Renyi graph with 200 nodes (from `gcc_size` at 0 removal). Spectral metrics are computed on the GCC and are missing for 24 checkpoints where the GCC becomes too small.
+
+**Experiment Setup (from `results/data/er_degree.csv`)**
+- Graph family: Erdos-Renyi (single instance, `n=200` inferred from `gcc_size` at 0 removal; `p`/seed not recorded in the CSV).
+- Failure/attack model: degree-based node removals in increasing fractions `removed_fraction` from 0.0 to 1.0 (201 checkpoints).
+- Robustness metrics: `gcc_fraction`, `gcc_size`, `num_components`, `avg_shortest_path_gcc`.
+- Spectral metrics on GCC: `algebraic_connectivity_gcc`, `spectral_gap_ratio_gcc`, `kirchhoff_index_gcc`.
+
+**Core Robustness Outcomes**
+- The GCC shrinks rapidly under degree attack, dropping below 50% by `removed_fraction=0.425` and below 10% by `removed_fraction=0.575`, as shown in `results/plots/er_degree/er_gcc_fraction.png`.
+- Fragmentation increases sharply, with the number of components peaking at 51 around `removed_fraction=0.66` (`results/plots/er_degree/er_num_components.png`).
+- The average shortest path within the GCC increases and peaks around `removed_fraction=0.50` (max ≈ 7.47), shown in `results/plots/er_degree/er_avg_shortest_path_gcc.png`.
+
+**Spectral Behavior Across Removals**
+- Algebraic connectivity of the GCC drops toward zero as removals progress (min ≈ 0.018 near `removed_fraction=0.56`), reflecting weakened internal connectivity (`results/plots/er_degree/er_algebraic_connectivity_gcc.png`).
+- Kirchhoff index grows strongly as the graph fragments and peaks around `removed_fraction=0.425` (max ≈ 18996), mirroring GCC shrinkage (`results/plots/er_degree/er_kirchhoff_index_gcc.png` and `results/plots/er_degree/er_compare_gcc_fraction_vs_kirchhoff.png`).
+
+**Correlation Analysis (Pearson r, n=177 paired points)**
+These correlations quantify how well each spectral indicator tracks robustness outcomes in this ER degree-attack dataset.
+
+| Spectral Metric | Robustness Metric | Pearson r |
+| --- | --- | --- |
+| spectral_gap_ratio_gcc | avg_shortest_path_gcc | 0.879 |
+| algebraic_connectivity_gcc | avg_shortest_path_gcc | -0.845 |
+| kirchhoff_index_gcc | num_components | -0.809 |
+| kirchhoff_index_gcc | avg_shortest_path_gcc | 0.799 |
+| kirchhoff_index_gcc | gcc_fraction | 0.758 |
+| kirchhoff_index_gcc | gcc_size | 0.758 |
+| algebraic_connectivity_gcc | gcc_fraction | -0.442 |
+| algebraic_connectivity_gcc | gcc_size | -0.442 |
+| algebraic_connectivity_gcc | num_components | 0.378 |
+| spectral_gap_ratio_gcc | num_components | -0.125 |
+| spectral_gap_ratio_gcc | gcc_fraction | 0.035 |
+| spectral_gap_ratio_gcc | gcc_size | 0.035 |
+
+**Key Conclusions Supported by the Data**
+- Under degree attacks, path-efficiency inside the GCC is most strongly tracked by spectral gap ratio and algebraic connectivity (very strong correlations with `avg_shortest_path_gcc`).
+- Kirchhoff index remains a strong indicator of GCC size and fragmentation (`gcc_fraction`, `gcc_size`, and `num_components`), though path-efficiency metrics dominate the top correlations in this run.
+- Spectral gap ratio is a weak predictor of GCC size/fragmentation under targeted degree removals (near-zero correlations with `gcc_fraction`/`gcc_size`).
+
+**Plots Included**
+GCC robustness over removals:
+- `results/plots/er_degree/er_gcc_fraction.png`
+- `results/plots/er_degree/er_num_components.png`
+- `results/plots/er_degree/er_avg_shortest_path_gcc.png`
+
+Spectral metrics over removals:
+- `results/plots/er_degree/er_algebraic_connectivity_gcc.png`
+- `results/plots/er_degree/er_kirchhoff_index_gcc.png`
+- `results/plots/er_degree/er_compare_gcc_fraction_vs_kirchhoff.png`
+
+Spectral-vs-robustness relationships:
+- `results/plots/er_degree/er_scatter_kirchhoff_vs_gcc_fraction.png`
+- `results/plots/er_degree/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png`
+- `results/plots/er_degree/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png`
+
+**Figure Gallery**
+![](results/plots/er_degree/er_gcc_fraction.png)
+![](results/plots/er_degree/er_kirchhoff_index_gcc.png)
+![](results/plots/er_degree/er_num_components.png)
+![](results/plots/er_degree/er_avg_shortest_path_gcc.png)
+![](results/plots/er_degree/er_algebraic_connectivity_gcc.png)
+![](results/plots/er_degree/er_compare_gcc_fraction_vs_kirchhoff.png)
+![](results/plots/er_degree/er_scatter_kirchhoff_vs_gcc_fraction.png)
+![](results/plots/er_degree/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png)
+![](results/plots/er_degree/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png)
+
+## Side-by-Side Comparison: Random Failures vs Degree Attacks (ER)
+
+This section compares `results/data/er.csv` (random removals) and `results/data/er_degree.csv` (degree attacks) for the same ER graph size (`n=200` inferred from GCC size at zero removal).
+
+**Robustness Milestones**
+
+| Metric | Random Failures | Degree Attacks |
+| --- | --- | --- |
+| GCC falls below 50% | `removed_fraction=0.48` | `removed_fraction=0.425` |
+| GCC falls below 20% | `removed_fraction=0.73` | `removed_fraction=0.555` |
+| GCC falls below 10% | `removed_fraction=0.73` | `removed_fraction=0.575` |
+| GCC falls below 5% | `removed_fraction=0.785` | `removed_fraction=0.59` |
+| Max components (count) | 18 at `removed_fraction=0.79` | 51 at `removed_fraction=0.66` |
+| Max avg shortest path (GCC) | 5.756 at `removed_fraction=0.725` | 7.468 at `removed_fraction=0.50` |
+| Spectral rows with NaNs | 9 of 201 | 24 of 201 |
+
+**Spectral-to-Robustness Correlations (Pearson r)**
+
+| Pair | Random Failures | Degree Attacks |
+| --- | --- | --- |
+| kirchhoff_index_gcc vs gcc_fraction | 0.981 | 0.758 |
+| kirchhoff_index_gcc vs num_components | -0.964 | -0.809 |
+| algebraic_connectivity_gcc vs avg_shortest_path_gcc | -0.712 | -0.845 |
+| spectral_gap_ratio_gcc vs avg_shortest_path_gcc | 0.770 | 0.879 |
+
+**Comparison Takeaways**
+- Degree attacks collapse the GCC earlier and produce substantially more fragmentation than random failures.
+- Path-efficiency inside the GCC degrades more sharply under degree attacks (higher max avg shortest path).
+- Kirchhoff index remains a strong proxy for GCC size/fragmentation in both cases, but its correlations are weaker under degree attacks.
+
+**Comparison Plot**
+- `results/plots/er_compare_random_vs_degree_gcc_fraction.png`
+
+![](results/plots/er_compare_random_vs_degree_gcc_fraction.png)
