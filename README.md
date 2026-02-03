@@ -136,6 +136,7 @@ Spectral-vs-robustness relationships:
 ![](results/plots/er_random/er_num_components.png)
 ![](results/plots/er_random/er_avg_shortest_path_gcc.png)
 ![](results/plots/er_random/er_algebraic_connectivity_gcc.png)
+![](results/plots/er_random/er_compare_gcc_fraction_vs_kirchhoff.png)
 ![](results/plots/er_random/er_scatter_kirchhoff_vs_gcc_fraction.png)
 ![](results/plots/er_random/er_scatter_algebraic_connectivity_vs_avg_shortest_path.png)
 ![](results/plots/er_random/er_scatter_spectral_gap_ratio_vs_avg_shortest_path.png)
